@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cURLy</title>
+
+  
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+</head>
+<body>
+  <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+
+    <script src='//code.jquery.com/jquery.min.js'></script>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#" style="color: white">cURLy</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="color:white">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" style="color:white" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" style="color:white" href="/features">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" style="color:white" href="/linkstats">Linkstats</a>
+        </li>
+        <li class="nav-item">
+          <a style="color:grey" class="nav-link disabled">Dashboard (soon)</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</br>
+
+    <label for='url' style="margin-left:10px">URL to shorten</label>
+    <input name='url'>
+    <button onclick='shorten()'>Shorten</button>
+
+  </br>
+  </br>
+    <p id='res'></p>
+
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+
+  <div class="container">
+  <footer class="py-3 my-4">
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+      <li class="nav-item"><a href="/features" class="nav-link px-2 text-muted">Features</a></li>
+      <li class="nav-item"><a href="/linkstats" class="nav-link px-2 text-muted">Linkstats</a></li>
+    </ul>
+    <p class="text-center text-muted">© 2022 cURLy, Inc</p>
+  </footer>
+</div>
+
+    <script>
+        function shorten() {
+            url = $('input[name=url]').val();
+            if (url) {
+                $.post('/api/create', {'url': url}, (res) => {
+                    $('#res').html(`</br><hr></br></br><a href='${res['key']}' style="margin-left:10px">Your link is ready !</a><input type="text" value="https://curly.slxlegit.repl.co/${res['key']}" id="linkInput" readonly style="margin-left:10px"><button onclick="copy()" style="margin-left:10px">Copy link</button></br><p style="margin-left:10px">Link ID : <a href='${res['key']}.json' style="margin-left:10px">${res['key']}</a></p>`);
+                })
+            } else {
+                $('#res').text('No URL Specified');
+            }
+        }
+
+      function copy() {
+  /* Get the text field */
+  var copyText = document.getElementById("linkInput");
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+   /* Copy the text inside the text field */
+  navigator.clipboard.writeText(copyText.value);
+
+  /* Alert the copied text */
+  alert("Link copied !");
+   }
+    </script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+
+
+
+
+  <style>
+    body {
+      background-color: #191919;
+    }
+
+    h1, hr, p, label{
+      color: white
+    }
+  </style>
+    
+</body>
+</html>
